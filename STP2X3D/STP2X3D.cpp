@@ -9,10 +9,10 @@
 #include "GDT_Item.h"
 #include "Mesh.h"
 //#include <experimental/filesystem>
-//#include <filesystem>
+#include <filesystem>
 
-namespace fs = std::experimental::filesystem;
-//namespace fs = std::filesystem;
+//namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 void Test(S2X_Option* opt)
 {

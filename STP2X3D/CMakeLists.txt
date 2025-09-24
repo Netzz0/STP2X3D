@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.12.2)
 
 project(STP2X3D)
 
-set (ENV{CSF_OCCTIncludePath} /usr/local/include/opencascade)
-set (ENV{CSF_OCCTLibPath} /usr/local/lib)
+set (ENV{CSF_OCCTIncludePath} /mnt/c/Users/m.behm/stp2x3d/occt-build/include/opencascade)
+set (ENV{CSF_OCCTLibPath} /mnt/c/Users/m.behm/stp2x3d/occt-build/lin64/gcc/lib)
 
 foreach (EnvVar IN ITEMS CSF_OCCTIncludePath CSF_OCCTLibPath)
   if ("$ENV{${EnvVar}}" STREQUAL "")
@@ -14,6 +14,8 @@ set(CMAKE_CONFIGURATION_TYPES "Debug;Release"
     CACHE STRING "Configuration types" FORCE)
 
 add_executable(STP2X3D
+  GDT_Item.cpp
+  GDT_Item.h
   Component.cpp
   Component.h
   IShape.cpp
@@ -53,6 +55,7 @@ set_property(TARGET STP2X3D
     $ENV{CSF_OCCTIncludePath}>
 )
 
+link_directories($ENV{CSF_OCCTLibPath})
 target_include_directories(${PROJECT_NAME} PRIVATE $ENV{CSF_OCCTIncludePath})
 target_link_libraries(${PROJECT_NAME} stdc++fs
     TKBinL
@@ -72,8 +75,9 @@ target_link_libraries(${PROJECT_NAME} stdc++fs
     TKGeomAlgo
     TKGeomBase
     TKHLR
-    TKIGES
+    TKXSDRAWIGES
     TKLCAF
+	TKDESTEP
     TKMath
     TKMesh
     TKMeshVS
@@ -85,19 +89,15 @@ target_link_libraries(${PROJECT_NAME} stdc++fs
     TKShHealing
     TKStdL
     TKStd
-    TKSTEP209
-    TKSTEPAttr
-    TKSTEPBase
-    TKSTEP
-    TKSTL
+    TKXSDRAWSTL
     TKTObj
     TKTopAlgo
     TKV3d
     TKVCAF
-    TKVRML
+    TKXSDRAWVRML
     TKXCAF
-    TKXDEIGES
-    TKXDESTEP
+    TKXSDRAWIGES
+    TKXSDRAWSTEP
     TKXMesh
     TKXmlL
     TKXml

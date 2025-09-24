@@ -54,12 +54,17 @@ void X3D_Writer::WriteX3D(Model*& model)
 	// Write X3D file
 	wstring filePath = m_opt->Output();
 
+	using convert_type = std::codecvt_utf8<wchar_t>;
+	std::wstring_convert<convert_type, wchar_t> converter;
+
+	//use converter (.to_bytes: wstr->str, .from_bytes: str->wstr)
+	std::string converted_str = converter.to_bytes(filePath.c_str());
+
 	wofstream wof;
 
 	// This line is required to write Unicode characters.
-	wof.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t, 0x10ffff, generate_header>)); 
-	
-	wof.open(filePath.c_str());
+	wof.imbue(locale(locale(), new codecvt_utf8<wchar_t, 0x10ffff, generate_header>));
+	wof.open(converted_str);
 	wof << ss_x3d.str().c_str();
 	wof.close();
 
